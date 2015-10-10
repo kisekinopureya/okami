@@ -981,7 +981,6 @@ static void xpad_led_set(struct led_classdev *led_cdev,
 
 static int xpad_led_probe(struct usb_xpad *xpad)
 {
-	static atomic_t led_seq = ATOMIC_INIT(-1);
 	struct xpad_led *led;
 	struct led_classdev *led_cdev;
 	int error;
@@ -999,9 +998,7 @@ static int xpad_led_probe(struct usb_xpad *xpad)
 		goto err_free_mem;
 	}
 
-	xpad->pad_nr = atomic_inc_return(&led_seq);
-
-	snprintf(led->name, sizeof(led->name), "xpad%lu", xpad->pad_nr);
+	snprintf(led->name, sizeof(led->name), "xpad%d", xpad->pad_nr);
 	led->xpad = xpad;
 
 	led_cdev = &led->led_cdev;
@@ -1014,7 +1011,6 @@ static int xpad_led_probe(struct usb_xpad *xpad)
 
 	/* Light up the segment corresponding to controller number */
 	xpad_identify_controller(xpad);
-
 	return 0;
 
 err_free_id:
