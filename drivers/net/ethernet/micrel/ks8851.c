@@ -1750,6 +1750,7 @@ err_netdev:
 	free_irq(ndev->irq, ks);
 
 err_irq:
+err_id:
 	if (gpio_is_valid(gpio))
 		gpio_set_value(gpio, 0);
 err_id:
