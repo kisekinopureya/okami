@@ -27,7 +27,7 @@ mkdir -p $(pwd)/out
 if [[ "$*" == *"-no-menuconfig"* ]]
 then
   NO_MENUCONFIG=1
-  MAKE_STATEMENT="$MAKE_STATEMENT KCONFIG_CONFIG=./arch/arm64/configs/santoni_defconfig"
+  MAKE_STATEMENT="$MAKE_STATEMENT KCONFIG_CONFIG=$(pwd)/arch/arm64/configs/santoni_defconfig"
 fi
 
 
@@ -111,9 +111,9 @@ if [ $? -eq 0 ]
 then
   # Get current kernel version
   LOUP_VERSION=$(head -n3 Makefile | sed -E 's/.*(^\w+\s[=]\s)//g' | xargs | sed -E 's/(\s)/./g')
-  echo -e "\n\n> Packing Ōkami Kernel v$LOUP_VERSION\n\n"
+  echo -e "\n\n> Packing ArchWizard Kernel v$LOUP_VERSION\n\n"
   # Pack the kernel as a flashable TWRP zip. Nougat Edition
-  $LOUP_WORKING_DIR/AnyKernel3/build.sh $LOUP_VERSION 10 Ōkami
+  $LOUP_WORKING_DIR/AnyKernel3/build.sh $LOUP_VERSION 10 ArchWizard
 
   end=$SECONDS
   duration=$(( end - start ))
